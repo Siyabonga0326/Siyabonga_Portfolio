@@ -316,7 +316,7 @@
 <section class="py-5 wow fadeInUp" data-wow-delay="0.1s" id="contact">
     <h1 class="title pb-3 mb-5">Contact Me</h1>
     <p class="mb-4"></p>
-    <form action="https://formsubmit.co/8dbed22d664ce33ce886a583ebc6b5dc"  id="contactForm" method="POST">
+    <form action="https://formsubmit.co/8dbed22d664ce33ce886a583ebc6b5dc"  id="contactForm" method="POST" onsubmit="handleFormSubmit(event)" >
         <div class="row g-3"> 
             <div class="col-md-6">
                 <div class="form-floating">
@@ -346,14 +346,13 @@
                 <button class="btn btn-primary w-100 py-3" type="submit">Send Message</button>
             </div>
         </div>
-	      <input type="hidden" name="_captcha" value="false">
-       <input type="hidden" name="_next" value="https://siyabonga0326.github.io/Siyabonga_Portfolio/">
-
+	       <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_next" value="https://siyabonga0326.github.io/Siyabonga_Portfolio/">
     </form>
-	   <div id="successMessage" class="alert alert-success mt-3" style="display: none;">
-            <h5>Thanks for getting in touch, Siya!</h5>
-            <p>You will be redirected to the homepage shortly.</p>
-        </div>
+    <div id="successMessage" class="alert alert-success mt-3" style="display: none;">
+        <h5>Thanks for getting in touch, Siya!</h5>
+        <p>You will be redirected to the homepage shortly.</p>
+    </div>
 </section>
 <!-- Contact End -->
 
@@ -407,21 +406,31 @@
         <!-- Template Javascript -->
         <script src="js/main.js"></script>
 
-	        <script>
-        document.getElementById('contactForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent form submission for demo purposes
-            
-            // Show the success message
-            document.getElementById('successMessage').style.display = 'block';
-            
-            // Hide the form
-            document.getElementById('contactForm').style.display = 'none';
-            
-            // Redirect to the homepage after 10 seconds
-            setTimeout(function() {
-                window.location.href = 'index.html'; // Change this to your homepage URL
-            }, 10000);
-        });
-    </script>
+<script>
+function handleFormSubmit(event) {
+    event.preventDefault(); // Prevent default form submission
+
+    const form = document.getElementById("contactForm");
+    fetch(form.action, {
+        method: form.method,
+        body: new FormData(form),
+        headers: {
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => {
+        if (response.ok) {
+            form.reset(); // Reset the form
+            document.getElementById("successMessage").style.display = "block"; // Show thank-you message
+            setTimeout(() => {
+                window.location.href = "https://siyabonga0326.github.io/Siyabonga_Portfolio/"; // Redirect to homepage
+            }, 3000); // Redirect after 3 seconds
+        } else {
+            alert("There was an error submitting the form.");
+        }
+    })
+    .catch(error => alert("There was an error submitting the form."));
+}
+</script>
     </body>
 </html>
