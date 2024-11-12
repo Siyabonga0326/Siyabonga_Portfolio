@@ -421,6 +421,10 @@ function handleFormSubmit(event) {
     event.preventDefault(); // Prevent default form submission
 
     const form = document.getElementById("contactForm");
+
+    // Show the spinner
+    document.getElementById("spinner").style.display = "block";
+
     fetch(form.action, {
         method: form.method,
         body: new FormData(form),
@@ -429,6 +433,8 @@ function handleFormSubmit(event) {
         }
     })
     .then(response => {
+        document.getElementById("spinner").style.display = "none"; // Hide the spinner
+
         if (response.ok) {
             form.reset(); // Reset the form
             document.getElementById("successMessage").style.display = "block"; // Show thank-you message
@@ -439,15 +445,12 @@ function handleFormSubmit(event) {
             alert("There was an error submitting the form.");
         }
     })
-    .catch(error => alert("There was an error submitting the form."));
+    .catch(error => {
+        document.getElementById("spinner").style.display = "none"; // Hide the spinner in case of error
+        alert("There was an error submitting the form.");
+    });
 }
 </script>
 
-	    <script>
-    function showSpinner() {
-        // Show the spinner
-        document.getElementById('spinner').style.display = 'block';
-    }
-</script>
     </body>
 </html>
