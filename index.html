@@ -312,12 +312,12 @@
                             </div>
                         </div>
                     </section>
-  <!-- Contact Start -->
+   <!-- Contact Form Section Start -->
 <section class="py-5 wow fadeInUp" data-wow-delay="0.1s" id="contact">
     <h1 class="title pb-3 mb-5">Contact Me</h1>
-    <p class="mb-4"></p>
-    <form action="https://formsubmit.co/8dbed22d664ce33ce886a583ebc6b5dc"  id="contactForm" method="POST" onsubmit="handleFormSubmit(event)" >
+    <form action="https://formsubmit.co/8dbed22d664ce33ce886a583ebc6b5dc" id="contactForm" method="POST" onsubmit="handleFormSubmit(event)">
         <div class="row g-3"> 
+            <!-- Form fields here... -->
             <div class="col-md-6">
                 <div class="form-floating">
                     <input type="text" class="form-control border-0 bg-secondary" id="name" name="name" placeholder="Your Name" required>
@@ -346,23 +346,24 @@
                 <button class="btn btn-primary w-100 py-3" type="submit">Send Message</button>
             </div>
         </div>
-	       <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_captcha" value="false">
         <input type="hidden" name="_next" value="https://siyabonga0326.github.io/Siyabonga_Portfolio/">
     </form>
+    
+    <!-- Success Message -->
     <div id="successMessage" class="alert alert-success mt-3" style="display: none;">
         <h5>Thanks for getting in touch</h5>
         <p>This page will be refreshed soon....</p>
     </div>
-
-	  <div id="spinner" style="display: none; text-align: center; padding-top: 20px;">
-        <div class="spinner-border text-primary" role="status">
-            <span class="visually-hidden">Submitting...</span>
-        </div>
-        <p>Please wait, submitting your message...</p>
-    </div>
 </section>
-<!-- Contact End -->
+<!-- Contact Form Section End -->
 
+<!-- Existing Spinner Start -->
+<div id="spinner" class="bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+    <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
                     <!-- Contact End -->
 
                     <!-- Footer Start -->
@@ -415,42 +416,45 @@
 
         <!-- Template Javascript -->
         <script src="js/main.js"></script>
-
-<script>
-function handleFormSubmit(event) {
-    event.preventDefault(); // Prevent default form submission
-
-    const form = document.getElementById("contactForm");
-
-    // Show the spinner
-    document.getElementById("spinner").style.display = "block";
-
-    fetch(form.action, {
-        method: form.method,
-        body: new FormData(form),
-        headers: {
-            'Accept': 'application/json'
-        }
-    })
-    .then(response => {
-        document.getElementById("spinner").style.display = "none"; // Hide the spinner
-
-        if (response.ok) {
-            form.reset(); // Reset the form
-            document.getElementById("successMessage").style.display = "block"; // Show thank-you message
-            setTimeout(() => {
-                window.location.href = "https://siyabonga0326.github.io/Siyabonga_Portfolio/"; // Redirect to homepage
-            }, 3000); // Redirect after 3 seconds
-        } else {
-            alert("There was an error submitting the form.");
-        }
-    })
-    .catch(error => {
-        document.getElementById("spinner").style.display = "none"; // Hide the spinner in case of error
-        alert("There was an error submitting the form.");
-    });
-}
-</script>
-
+        <script>
+            function handleFormSubmit(event) {
+                event.preventDefault(); // Prevent default form submission
+            
+                const form = document.getElementById("contactForm");
+            
+                // Show the global spinner
+                document.getElementById("spinner").classList.add("show");
+            
+                fetch(form.action, {
+                    method: form.method,
+                    body: new FormData(form),
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(response => {
+                    // Hide the spinner
+                    document.getElementById("spinner").classList.remove("show");
+            
+                    if (response.ok) {
+                        form.reset(); // Reset the form
+                        document.getElementById("successMessage").style.display = "block"; // Show thank-you message
+            
+                        // Redirect after a short delay
+                        setTimeout(() => {
+                            window.location.href = "https://siyabonga0326.github.io/Siyabonga_Portfolio/";
+                        }, 3000);
+                    } else {
+                        alert("There was an error submitting the form.");
+                    }
+                })
+                .catch(error => {
+                    // Hide the spinner in case of error
+                    document.getElementById("spinner").classList.remove("show");
+                    alert("There was an error submitting the form.");
+                });
+            }
+            </script>
+            
     </body>
 </html>
