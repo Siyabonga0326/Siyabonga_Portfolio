@@ -353,6 +353,13 @@
         <h5>Thanks for getting in touch, Siya!</h5>
         <p>You will be redirected to the homepage shortly.</p>
     </div>
+
+	  <div id="spinner" style="display: none; text-align: center; padding-top: 20px;">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Submitting...</span>
+        </div>
+        <p>Please wait, submitting your message...</p>
+    </div>
 </section>
 <!-- Contact End -->
 
@@ -434,6 +441,13 @@ function handleFormSubmit(event) {
     })
     .catch(error => alert("There was an error submitting the form."));
 }
+</script>
+
+	    <script>
+    function showSpinner() {
+        // Show the spinner
+        document.getElementById('spinner').style.display = 'block';
+    }
 </script>
     </body>
 </html>
